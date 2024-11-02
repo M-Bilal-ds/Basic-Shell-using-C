@@ -81,11 +81,6 @@ This Version is an enhanced version of a command-line shell that supports basic 
 
 To run this shell, compile the code and execute the binary. The shell will display a prompt and accept commands with options for redirection and piping.
 
-```sh
-$ gcc -o shell shell.c
-$ ./shell
-username: /current_directory$```
-
 # Version 3
 ### Overview
 This C code implements a simple shell-like program that supports:
