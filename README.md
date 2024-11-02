@@ -1,4 +1,4 @@
-# Version 1
+_# Version 1_
 
 This version implements a basic command-line shell that can execute user commands, tokenize inputs, and display a customizable prompt with the current username and working directory.
 
@@ -34,7 +34,7 @@ This version implements a basic command-line shell that can execute user command
 
 To run this shell, compile the code and execute. The shell will display a prompt based on the username and working directory. Enter commands as you would in any terminal.
 
-# Version 2
+_# Version 2_
 
 This Version is an enhanced version of a command-line shell that supports basic command execution, input/output redirection, and piping between commands. It offers a customizable prompt and efficiently manages processes and memory.
 
@@ -81,7 +81,7 @@ This Version is an enhanced version of a command-line shell that supports basic 
 
 To run this shell, compile the code and execute the binary. The shell will display a prompt and accept commands with options for redirection and piping.
 
-# Version 3
+_# Version 3_
 ### Overview
 This C code implements a simple shell-like program that supports:
 1. Basic command execution
@@ -138,7 +138,7 @@ This C code implements a simple shell-like program that supports:
 ### Usage
 Ensure to compile this code with a C compiler, such as `gcc`, and test in a compatible environment like Linux or macOS for proper functionality.
 
-# Version 4
+_# Version 4_
 
 ## Overview
 
@@ -197,3 +197,41 @@ The program is a simple command-line shell implemented in C, which supports exec
 ## Usage
 
 The code is functional and tested for basic features. It can be compiled and run without issues. Additional enhancements and features can be added as needed.
+
+_# Version 5_
+
+## Overview
+This code implements a simple shell program that can execute commands, manage background jobs, handle input/output redirection, and maintain a history of commands.
+
+## Features
+- **Command Execution**: Executes commands with or without arguments, including support for input/output redirection and background execution.
+- **Job Management**: Tracks background jobs and allows the user to list and kill jobs.
+- **Command History**: Maintains a history of the last 10 commands executed, allowing users to repeat previous commands.
+- **Pipes**: Supports piping between two commands.
+
+## Built-in Commands
+- `cd <directory>`: Change the current working directory.
+- `exit`: Terminate the shell.
+- `jobs`: List background jobs.
+- `kill <job_num>`: Terminate a background job.
+- `help`: Display help information.
+
+## Code Structure
+- **Main Loop**: The shell runs in a loop, displaying a prompt, reading commands, and executing them.
+- **Signal Handling**: Uses signal handling to manage child processes.
+- **Tokenization**: Splits input commands into tokens for easier processing.
+- **Memory Management**: Allocates and frees memory for command arguments and history.
+
+## Memory Management
+- Properly frees allocated memory to avoid leaks.
+- Uses `strdup` to duplicate strings for command history.
+
+## Limitations
+- Supports a maximum of 10 concurrent background jobs.
+- Command history is limited to the last 10 commands.
+- Input command length is limited to 1024 characters.
+
+## Future Improvements
+- Increase the maximum number of jobs.
+- Add support for more built-in commands.
+- Enhance error handling and user feedback.
