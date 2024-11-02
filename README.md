@@ -84,7 +84,7 @@ To run this shell, compile the code and execute the binary. The shell will displ
 ```sh
 $ gcc -o shell shell.c
 $ ./shell
-username: /current_directory$
+username: /current_directory$```
 
 # Version 3
 ### Overview
