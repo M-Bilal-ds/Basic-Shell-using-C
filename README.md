@@ -1,4 +1,4 @@
-_# Version 1_
+# _Version 1_
 
 This version implements a basic command-line shell that can execute user commands, tokenize inputs, and display a customizable prompt with the current username and working directory.
 
@@ -34,7 +34,7 @@ This version implements a basic command-line shell that can execute user command
 
 To run this shell, compile the code and execute. The shell will display a prompt based on the username and working directory. Enter commands as you would in any terminal.
 
-_# Version 2_
+# _Version 2_
 
 This Version is an enhanced version of a command-line shell that supports basic command execution, input/output redirection, and piping between commands. It offers a customizable prompt and efficiently manages processes and memory.
 
@@ -81,7 +81,7 @@ This Version is an enhanced version of a command-line shell that supports basic 
 
 To run this shell, compile the code and execute the binary. The shell will display a prompt and accept commands with options for redirection and piping.
 
-_# Version 3_
+# _Version 3_
 ### Overview
 This C code implements a simple shell-like program that supports:
 1. Basic command execution
@@ -138,7 +138,7 @@ This C code implements a simple shell-like program that supports:
 ### Usage
 Ensure to compile this code with a C compiler, such as `gcc`, and test in a compatible environment like Linux or macOS for proper functionality.
 
-_# Version 4_
+# _Version 4_
 
 ## Overview
 
@@ -198,7 +198,7 @@ The program is a simple command-line shell implemented in C, which supports exec
 
 The code is functional and tested for basic features. It can be compiled and run without issues. Additional enhancements and features can be added as needed.
 
-_# Version 5_
+# _Version 5_
 
 ## Overview
 This code implements a simple shell program that can execute commands, manage background jobs, handle input/output redirection, and maintain a history of commands.
