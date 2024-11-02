@@ -138,3 +138,62 @@ This C code implements a simple shell-like program that supports:
 ### Usage
 Ensure to compile this code with a C compiler, such as `gcc`, and test in a compatible environment like Linux or macOS for proper functionality.
 
+# Version 4
+
+## Overview
+
+The program is a simple command-line shell implemented in C, which supports executing commands, input/output redirection, piping, and maintaining command history.
+
+## Features Implemented
+
+- **Command Execution**: 
+  - Supports execution of external commands using `execvp`.
+  
+- **Input/Output Redirection**: 
+  - Handles redirection of input using `<` and output using `>`.
+  
+- **Piping**: 
+  - Supports piping between two commands using `|`.
+  
+- **Command History**: 
+  - Maintains the last 10 commands entered by the user.
+  - Allows repeating commands using `!n` (where `n` is the command number).
+  
+- **Background Execution**: 
+  - Supports running commands in the background with `&`.
+
+## Code Structure
+
+### Global Variables
+
+- `char* command_history[HISTSIZE]`: Array to store command history.
+- `int hist_index`: Index to track the current position in the command history.
+
+### Functionality
+
+- **Signal Handling**: 
+  - Uses a signal handler (`sigchld_handler`) to handle child process termination.
+  
+- **Command Loop**: 
+  - Continuously prompts for user input, processes commands, and manages command history.
+
+- **Command Execution and Piping**: 
+  - The `execute` function handles command execution and redirection.
+  - The `execute_pipe` function manages execution of commands connected by a pipe.
+
+- **Tokenization**: 
+  - The `tokenize` function splits user input into command arguments.
+
+- **Memory Management**: 
+  - Allocates and frees memory for command history and argument lists.
+
+## Potential Improvements
+
+- Implementing built-in commands (e.g., `exit`, `cd`).
+- Adding advanced error handling for various edge cases.
+- Supporting more complex command structures.
+- Improving user experience by enhancing command line editing capabilities.
+
+## Usage
+
+The code is functional and tested for basic features. It can be compiled and run without issues. Additional enhancements and features can be added as needed.
