@@ -86,4 +86,60 @@ $ gcc -o shell shell.c
 $ ./shell
 username: /current_directory$
 
+# Version 3
+### Overview
+This C code implements a simple shell-like program that supports:
+1. Basic command execution
+2. Input and output redirection
+3. Piping between two commands
+4. Running commands in the background
+5. Handling zombie processes using signal handling
+
+### Key Components
+- **`execute` function**: Executes a single command, with optional redirection for input and output, and allows background execution.
+- **`execute_pipe` function**: Supports piping between two commands by creating a pipe and forking two child processes for the commands.
+- **`tokenize` function**: Tokenizes the command line input into an array of arguments.
+- **`read_cmd` function**: Reads and returns a command line from the user, including dynamic prompt creation with username and current directory.
+- **Signal Handling**: The `sigchld_handler` prevents zombie processes by handling `SIGCHLD`.
+
+### Key Features
+- **Background Execution**: Commands followed by `&` run in the background, and the shell continues accepting input without waiting for the command to complete.
+- **Input and Output Redirection**: The shell supports `<` for input redirection and `>` for output redirection.
+- **Piping**: The shell can handle a single pipe between two commands (e.g., `ls | grep`).
+- **Dynamic Prompt**: Displays the username and current working directory in the prompt.
+
+### Code Structure
+1. **Main Loop**:
+   - Sets up signal handling to avoid zombies.
+   - Displays a dynamic prompt.
+   - Reads user input, tokenizes it, and handles background execution, redirection, and pipes.
+
+2. **Command Execution**:
+   - `execute` function handles command execution and redirection.
+   - `execute_pipe` handles the creation and execution of a pipe.
+
+3. **Memory Management**:
+   - Proper memory allocation and deallocation to avoid memory leaks.
+
+### Limitations
+- **Pipes**: Currently, only single pipes between two commands are supported.
+- **Argument Limit**: Limited to `MAXARGS` (10 arguments) due to static allocation.
+- **Error Handling**: Basic error handling; limited checks for specific command failures.
+
+### Example Usage
+- **Background Execution**: `sleep 10 &`
+- **Input Redirection**: `command < input.txt`
+- **Output Redirection**: `command > output.txt`
+- **Piping**: `ls | grep 'pattern'`
+
+### Possible Improvements
+- Adding support for multiple pipes.
+- Dynamic argument list resizing to handle more than `MAXARGS` arguments.
+- Enhanced error handling and feedback for the user on command failures.
+
+### Dependencies
+- `<unistd.h>`, `<sys/types.h>`, `<sys/wait.h>`, `<pwd.h>`, `<fcntl.h>`, `<signal.h>`: Required for process control, I/O, and signal handling.
+
+### Usage
+Ensure to compile this code with a C compiler, such as `gcc`, and test in a compatible environment like Linux or macOS for proper functionality.
 
