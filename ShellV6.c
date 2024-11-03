@@ -13,6 +13,16 @@
 #define ARGLEN 30
 #define HISTSIZE 10
 #define MAXJOBS 100
+#define MAXVARS 100  // Max number of variables
+
+// Variable structure
+struct var {
+    char *str;   // name=value string
+    int global;  // Boolean to indicate if it's global
+};
+
+struct var var_table[MAXVARS];  // Variable table
+int var_count = 0;              // Current number of variables
 
 char* command_history[HISTSIZE];
 int hist_index = 0;
@@ -30,6 +40,12 @@ void free_history();
 void list_jobs();
 void kill_job(int job_number);
 void help();
+// Function declarations for variables
+void set_var(char *name, char *value, int global);
+char* get_var(char *name);
+void unset_var(char *name);
+void print_vars();
+
 
 void sigchld_handler(int signum) {
     while (waitpid(-1, NULL, WNOHANG) > 0);
@@ -61,6 +77,7 @@ int main() {
             exit(1);
         }
         snprintf(prompt, length_needed, "%s@%s$ ", username, cwd);
+
 
         if ((cmdline = read_cmd(prompt)) == NULL) {
             free(prompt);
@@ -100,6 +117,24 @@ int main() {
             if (strcmp(arglist[last_arg], "&") == 0) {
                 background = 1;
                 arglist[last_arg] = NULL;
+            }
+
+            if (strcmp(arglist[0], "set") == 0 && arglist[1] != NULL && arglist[2] != NULL) {
+                // "set name value" command
+                set_var(arglist[1], arglist[2], 0);  // 0 indicates local variable
+            } else if (strcmp(arglist[0], "export") == 0 && arglist[1] != NULL) {
+                // "export name" command
+                char *value = get_var(arglist[1]);
+                if (value != NULL) {
+                    set_var(arglist[1], value, 1);  // Set as global
+                    setenv(arglist[1], value, 1);  // Update the environment variable
+                }
+            } else if (strcmp(arglist[0], "unset") == 0 && arglist[1] != NULL) {
+                // "unset name" command
+                unset_var(arglist[1]);
+            } else if (strcmp(arglist[0], "printenv") == 0) {
+                // "printenv" command to list all variables
+                print_vars();
             }
 
             while (arglist[i] != NULL) {
@@ -406,6 +441,64 @@ void kill_job(int job_number) {
         job_count--;
     } else {
         perror("kill failed");
+    }
+}
+
+void set_var(char *name, char *value, int global) {
+    char buffer[1024];
+    snprintf(buffer, sizeof(buffer), "%s=%s", name, value);
+
+    // Check if variable already exists
+    for (int i = 0; i < var_count; i++) {
+        if (strncmp(var_table[i].str, name, strlen(name)) == 0 && var_table[i].str[strlen(name)] == '=') {
+            free(var_table[i].str);
+            var_table[i].str = strdup(buffer);
+            var_table[i].global = global;
+            return;
+        }
+    }
+
+    // Add a new variable if it doesn't exist
+    if (var_count < MAXVARS) {
+        var_table[var_count].str = strdup(buffer);
+        var_table[var_count].global = global;
+        var_count++;
+    } else {
+        fprintf(stderr, "Error: Maximum variable limit reached.\n");
+    }
+}
+
+char* get_var(char *name) {
+    for (int i = 0; i < var_count; i++) {
+        if (strncmp(var_table[i].str, name, strlen(name)) == 0 && var_table[i].str[strlen(name)] == '=') {
+            return strchr(var_table[i].str, '=') + 1;
+        }
+    }
+    return NULL;
+}
+
+void unset_var(char *name) {
+    for (int i = 0; i < var_count; i++) {
+        if (strncmp(var_table[i].str, name, strlen(name)) == 0 && var_table[i].str[strlen(name)] == '=') {
+            free(var_table[i].str);
+            var_table[i] = var_table[--var_count];  // Remove and shift last variable to current spot
+            return;
+        }
+    }
+}
+
+void print_vars() {
+    printf("User-defined variables:\n");
+    for (int i = 0; i < var_count; i++) {
+        if (!var_table[i].global) {
+            printf("  %s\n", var_table[i].str);
+        }
+    }
+    printf("Environment variables:\n");
+    for (int i = 0; i < var_count; i++) {
+        if (var_table[i].global) {
+            printf("  %s\n", var_table[i].str);
+        }
     }
 }
 
