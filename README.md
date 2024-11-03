@@ -36,20 +36,14 @@ Compile and run to display a prompt for user commands.
 
 ## Version 2
 
-### Key Features
-1. **Prompt Display**
-   - Shows a dynamic prompt with username and current working directory.
-
-2. **Command Tokenization**
-   - Supports tokenization of user input into arguments for `execvp`.
-
-3. **Command Execution with Redirection**
+### Key Features Added
+1. **Command Execution with Redirection**
    - Supports input (`<`) and output (`>`) redirection using `dup2`.
 
-4. **Piping Between Commands**
+2. **Piping Between Commands**
    - The `execute_pipe` function manages pipes between commands.
 
-5. **Memory Management**
+3. **Memory Management**
    - Allocates and frees memory to avoid leaks.
 
 ### File Structure
@@ -66,12 +60,9 @@ Compile and run for a shell with command execution, redirection, and piping.
 
 ## Version 3
 
-### Key Features
-1. **Basic Command Execution**
-2. **Input and Output Redirection**
-3. **Piping Between Commands**
-4. **Running Commands in the Background**
-5. **Handling Zombie Processes**
+### Key Features Added
+1. **Running Commands in the Background**
+2. **Handling Zombie Processes**
 
 ### Key Components
 - **`execute` function**: Executes commands with redirection.
@@ -89,9 +80,6 @@ Compile and run for a shell with command execution, redirection, and piping.
 - **Output Redirection**: `command > output.txt`
 - **Piping**: `ls | grep 'pattern'`
 
-### Dependencies
-- Requires headers for process control and signal handling.
-
 ### Usage
 Compile with a C compiler and test in a Linux or macOS environment.
 
@@ -102,19 +90,13 @@ Compile with a C compiler and test in a Linux or macOS environment.
 ### Overview
 Implements a shell supporting command execution, input/output redirection, piping, and command history.
 
-### Features Implemented
-1. **Command Execution**
-2. **Input/Output Redirection**
-3. **Piping**
+### Key Features Added
 4. **Command History**: Maintains the last 10 commands.
 
 ### Code Structure
 - **Global Variables**: Stores command history.
 - **Signal Handling**: Manages child processes.
 - **Command Loop**: Processes commands and maintains history.
-
-### Potential Improvements
-- Implement built-in commands and advanced error handling.
 
 ### Usage
 Compile and run the code for basic functionality and command history.
@@ -126,13 +108,7 @@ Compile and run the code for basic functionality and command history.
 ### Overview
 A simple shell program that executes commands, manages background jobs, handles redirection, and maintains a command history.
 
-### Features
-1. **Command Execution**: Executes commands with arguments.
-2. **Job Management**: Tracks and manages background jobs.
-3. **Command History**: Remembers the last 10 commands.
-4. **Pipes**: Supports piping between two commands.
-
-### Built-in Commands
+### Key Features Added
 - `cd <directory>`: Change directory.
 - `exit`: Terminate the shell.
 - `jobs`: List background jobs.
@@ -150,8 +126,26 @@ A simple shell program that executes commands, manages background jobs, handles 
 ### Limitations
 - Supports a maximum of 10 background jobs and command history.
 
-### Future Improvements
-- Increase job limits and enhance built-in commands.
-
 ---
+
+## Version 6
+
+### Overview
+A shell program that enhances command execution with variable management, background job handling, and advanced features like command piping and history tracking.
+
+### Key Features Added
+- **Variable Management**: Supports setting (`set`), exporting (`export`), unsetting (`unset`), and printing environment variables (`printenv`).
+- **Enhanced Command Handling**: Added support for command piping and background job management.
+  
+### Code Structure
+- **Main Loop**: Continuously reads commands and processes them based on user input.
+- **Signal Handling**: Uses a signal handler for managing child process termination.
+- **Tokenization**: Splits commands into manageable tokens for execution.
+- **Job Management**: Maintains a list of background jobs and allows users to kill them.
+
+### Memory Management
+- Allocates and frees memory for command history and variable storage dynamically.
+
+### Limitations
+- Supports a maximum of 100 background jobs, 10 command history entries, and 100 user-defined variables.
 
