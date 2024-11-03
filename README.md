@@ -1,4 +1,4 @@
-# Command-Line Shell Implementation
+# Linux Shell Implementation
 
 ## Overview
 This document outlines the evolution of a simple command-line shell program implemented in C, detailing its features, code structure, and potential improvements across five versions.
@@ -83,6 +83,11 @@ Compile and run for a shell with command execution, redirection, and piping.
 ### Usage
 Compile with a C compiler and test in a Linux or macOS environment.
 
+### Bugs Found
+- Commands that require sudo privelages ain't woking well.
+- The command terminal asks for password accepts northing.
+- I tried to disable sudo privelages for the shell and successfully did so but it didn't execute perfectly. So background commands that don't require admin privelages are working alright.
+
 ---
 
 ## Version 4
@@ -125,6 +130,11 @@ A simple shell program that executes commands, manages background jobs, handles 
 
 ### Limitations
 - Supports a maximum of 10 background jobs and command history.
+
+### Bugs Found
+- When executing pipe in this version, it was causing issue with built-in commands.
+- Execute was being called twice and thus it was executing command on either side of pipe.
+- This was fixed using a variable 'mera' which doesn't allow both built-in and external commands to cross each other's way.
 
 ---
 
